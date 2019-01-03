@@ -1,0 +1,34 @@
+#!/bin/bash
+case $1 in
+    start)
+        if [[ -f /tmp/.stop-streamer-pid ]] ; then
+            exit 1
+        fi
+
+        capture_root=$(dirname "$2")
+        capture_file=$(basename "$2")
+
+        inotifywait -m $capture_root -e create -e moved_to |
+            while read p a file; do
+                if [[ "$file" == "thumb_$capture_file" ]]; then
+                    mv "$capture_root/$file" "$2"
+                fi
+            done &
+        inotify_pid=$!
+        
+        java -jar ../lib/stop-streamer.jar "$2" &
+        java_pid=$!
+
+        echo $java_pid $inotify_pid >/tmp/.stop-streamer-pid
+        ;;
+    stop)
+        if [[ ! -f /tmp/.stop-streamer-pid ]]; then
+            exit 1
+        fi
+        kill -9 $(cat /tmp/.stop-streamer-pid)
+        rm /tmp/.stop-streamer-pid
+        ;;
+    *)
+        exit 1
+        ;;
+esac
