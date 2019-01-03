@@ -28,7 +28,19 @@ _Note as of version 0.0.1, you need `inotify-tools` installed in order for the p
 
 ## Usage
 
+Start the tool:
+```sh
+gphoto-streamer start <captured file path>
+```
 
+Kill it with:
+```sh
+gphoto-streamer stop
+```
+
+## Integration with linuxstopmotion
+
+_Stay tuned..._
 
 ## Release History
 
