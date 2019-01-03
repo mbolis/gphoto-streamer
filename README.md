@@ -1,8 +1,8 @@
 # GPhoto Streamer
-> Stream photos from your camera to [linuxstopmotion|http://linuxstopmotion.org/index.html] over [gphoto2|https://github.com/gphoto/gphoto2]
+> Stream photos from your camera to [linuxstopmotion](http://linuxstopmotion.org/index.html) over [gphoto2](https://github.com/gphoto/gphoto2)
 
 GPhoto Streamer is a tool born from two main needs:
-* make my digital camera usable from linuxstopmotion (now that I know it's [usable from gphoto2|https://github.com/gphoto/libgphoto2/issues/325])
+* make my digital camera usable from linuxstopmotion (now that I know it's [usable from gphoto2](https://github.com/gphoto/libgphoto2/issues/325))
 * have some practice with Kotlin
 
 ![GPhoto Streamer screenshot](screenshot.png)
