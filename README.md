@@ -24,9 +24,12 @@ cp build/libs/gphoto-streamer-*-all.jar ~/.local/lib
 cp gphoto-streamer ~/.local/bin
 ```
 
-_Note as of version 0.0.1, you need `inotify-tools` installed in order for the preview stream to work._
-
 ## Usage
+
+Use the tool in dialog mode:
+```sh
+gphoto-streamer runonce <captured file path>
+```
 
 Start the tool:
 ```sh
