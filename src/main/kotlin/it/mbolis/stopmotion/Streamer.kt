@@ -34,10 +34,23 @@ fun main(args: Array<String>) {
         exitProcess(1)
     }
 
-    Streamer(args[0])
+    val (cleanArgs, daemonMode) = if ("-d" in args) {
+        listOf(*args).filter { it != "-d" } to true
+    } else {
+        listOf(*args) to false
+    }
+
+    val imageFile = cleanArgs[0]
+
+    val autoRename = AutoRename(imageFile)
+    Runtime.getRuntime().addShutdownHook(Thread {
+        autoRename.close()
+    })
+
+    Streamer(imageFile, !daemonMode)
 }
 
-class Streamer(private val imagePath: String) : JFrame() {
+class Streamer(private val imagePath: String, closeOnXButtonClick: Boolean) : JFrame() {
     private val statusArea = JTextArea(7, 30)
 
     private val pollingStartIcon = ImageIO.read(ClassLoader.getSystemResourceAsStream("polling-start.png"))
@@ -51,8 +64,7 @@ class Streamer(private val imagePath: String) : JFrame() {
 
     init {
         title = "Stopmotion Streamer -> $imagePath"
-        defaultCloseOperation = EXIT_ON_CLOSE
-
+        defaultCloseOperation = if (closeOnXButtonClick) EXIT_ON_CLOSE else DO_NOTHING_ON_CLOSE
         layout = BorderLayout()
 
         addScrollingStatusArea()
